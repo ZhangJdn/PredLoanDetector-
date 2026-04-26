@@ -1,0 +1,18 @@
+
+"""
+This module describes all the test pdfs in sample docs along with their quality (Pure digital, image, handwriting)
+
+FULLY DIGITAL
+- OIC-144-Payday-Loans-Regulation.pdf
+- Consumer-and-Debt-Law-eng.pdf
+- 2018-2020-Backgrounder-Payday-Lending.pdf
+
+HYBRID
+- cpla_schedule 4a_agreement_application.pdf
+- 20484_payday_appendix_1_e.pdf
+
+IMAGE-BASED
+- 16_infographic_lending.pdf
+
+HUMAN-WRITING
+"""

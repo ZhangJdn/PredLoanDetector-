@@ -2,6 +2,7 @@
 
 """
 All regulatory limits are hardcoded and may not be up to date with current regulations
+ONLY for Canada and English documents
 """
 # ---- FEDERAL Criminal Code of Canada s.347(2)----
 CRIMINAL_USURY_APR = 60.0
