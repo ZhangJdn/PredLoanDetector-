@@ -1,32 +1,52 @@
+import os
 from backend.extractor import process_pdf
-from backend.tests import sample_docs
 from pathlib import Path
 
-def run_suite():
-    test_files = [
-        {"name": "digital_test.pdf", "expected_method": "digital"},
-        {"name": "scanned_test.pdf", "expected_method": "ocr"}
-    ]
+# Testing purposes only
+EXPECTED_DATA = {
+    "16_infographic_lending.pdf": "called payday advances",
+    "OIC-144-Payday-Loans-Regulation.pdf": "$300 for 14 days",
+    "20484_payday_appendix_1_e.pdf": "Payday Loans Regulation"
+}
 
-    for test in test_files:
-        print(f"\n>>> TESTING: {test['name']}")
-        try:
-            # 2. Run your processing logic
-            content = process_pdf(test['name'])
 
-            # 3. Basic Validation
-            if content and len(content) > 100:
-                print(f"SUCCESS: Extracted {len(content)} characters.")
+def validation_check():
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    SAMPLE_DOCS_DIR = BASE_DIR / "tests" / "sample_docs"
+    pdf_files = list(SAMPLE_DOCS_DIR.glob("*.pdf"))
 
-                # Check for a keyword you know is in the doc
-                if "Interest" in content or "Loan" in content:
-                    print("VERIFIED: Core keywords found.")
-            else:
-                print("WARNING: Extraction returned very little text.")
+    print(f"VALIDATION CHECK: {len(pdf_files)} FILES\n")
 
-        except Exception as e:
-            print(f"FAILED: An error occurred: {e}")
+    for pdf_file in pdf_files:
+        print(f"FILE: {pdf_file.name}")
+        print()
+        text = process_pdf(pdf_file.name)
+
+        if not text:
+            print("EMPTY STRING\n")
+            continue
+
+        # Print the first 500 chars for manual review
+        print("HEAD (First 500 Chars)")
+        print(text[:500].replace('\n', ' \\n '))  # Show line breaks explicitly
+        print("-------------------------------------------------------------")
+        print()
+
+        # Check for keywords
+        expected = EXPECTED_DATA.get(pdf_file.name, "loan")
+        if expected.lower() in text.lower():
+            print(f"  VALIDATION: Found expected string '{expected}'")
+        else:
+            print(f"  VALIDATION: Missing '{expected}' - Extraction may be garbled.")
+
+        # Checking for common OCR noise
+        noise_chars = ['|', '!', '°', '©', '®']
+        noise_count = sum(text.count(c) for c in noise_chars)
+        if noise_count > 50:
+            print(f"   WARNING: High noise detected ({noise_count} special chars).")
+
+        print("\n" + "=" * 50 + "\n")
 
 
 if __name__ == "__main__":
-    run_suite()
+    validation_check()
