@@ -35,4 +35,4 @@ def process_pdf(filename):
             else:
                 print(f"Page {i + 1} digital text extracted using pdf plumber.")
                 full_text.append(page_text)
-    return "\n".join(full_text)
+    return "".join(full_text)
