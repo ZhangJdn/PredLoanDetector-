@@ -1,6 +1,9 @@
 import re
 
 def clean_extracted_text(text):
+    if isinstance(text, list):
+        text = " ".join(text)
+
     if not text:
         return ""
 

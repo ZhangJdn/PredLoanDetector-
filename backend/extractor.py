@@ -2,6 +2,8 @@ import pytesseract
 import pdfplumber
 from pathlib import Path
 from pdf2image import convert_from_path
+from .cleaner import clean_extracted_text
+
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 POPPLER_PATH = r'C:\Program Files\poppler-25.12.0\Library\bin'
 
@@ -35,4 +37,6 @@ def process_pdf(filename):
             else:
                 print(f"Page {i + 1} digital text extracted using pdf plumber.")
                 full_text.append(page_text)
-    return "".join(full_text)
+    combined_string = "\n".join(full_text)
+    return clean_extracted_text(combined_string)
+
