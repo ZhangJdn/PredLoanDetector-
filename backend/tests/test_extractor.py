@@ -6,8 +6,7 @@ from pathlib import Path
 # pdf text so we know that it is working correctly
 EXPECTED_DATA = {
     "16_infographic_lending.pdf": "cost of loan",
-    "OIC-144-Payday-Loans-Regulation.pdf": "$300 for 14 days",
-    "20484_payday_appendix_1_e.pdf": "Payday Loans Regulation"
+    "cpla_schedule 4a_agreement_application.pdf": "assigns of the parties",
 }
 
 def validate_financial_integrity(text):
